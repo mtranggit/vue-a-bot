@@ -100,10 +100,19 @@ export default {
     PartSelector,
     CollapsibleSection,
   },
+  beforeRouteLeave(to, from, next) {
+    if (this.addedToCart) {
+      next(true)
+    } else {
+      const response = confirm('You have not added your robot to your cart, are you sure you want to leave this page?')
+      next(response)
+    }
+  },
   mixins: [robotBuilderMixin],
   data() {
     return {
       cart: [],
+      addedToCart: false,
       availableParts,
       selectedRobot: {
         head: {},
@@ -123,6 +132,7 @@ export default {
       // console.log(JSON.stringify(robot))
       const cost = robot.head.cost + robot.left.cost + robot.torso.cost + robot.right.cost + robot.base.cost
       this.cart.push({...robot, cost})
+      this.addedToCart = true
     },
   },
   computed: {
