@@ -10,16 +10,36 @@
             {{ selectedRobot.head.title }}
             <span class="on-sale" v-if="selectedRobot.head.onSale">Sale!</span>
           </div> -->
-        <PartSelector />
+        <PartSelector
+          :parts="availableParts.heads"
+          position="top"
+          @partSelected="part => handlePartSelected('head', part)"
+        />
         <!-- </div> -->
       </div>
       <div class="middle-row">
-        <PartSelector />
-        <PartSelector />
-        <PartSelector />
+        <PartSelector
+          :parts="availableParts.arms"
+          position="left"
+          @partSelected="part => (selectedRobot.left = part)"
+        />
+        <PartSelector
+          :parts="availableParts.torsos"
+          position="center"
+          @partSelected="part => (selectedRobot.torso = part)"
+        />
+        <PartSelector
+          :parts="availableParts.arms"
+          position="right"
+          @partSelected="part => (selectedRobot.right = part)"
+        />
       </div>
       <div class="bottom-row">
-        <PartSelector />
+        <PartSelector
+          :parts="availableParts.bases"
+          position="bottom"
+          @partSelected="part => (selectedRobot.base = part)"
+        />
       </div>
     </div>
     <div class="cart">
@@ -65,25 +85,22 @@ export default {
     return {
       cart: [],
       availableParts,
-      selectedHeadIndex: 0,
-      selectedLeftArmIndex: 0,
-      selectedRightArmIndex: 0,
-      selectedTorsoIndex: 0,
-      selectedBaseIndex: 0,
-    }
-  },
-  methods: {
-    selectedRobot() {
-      return {
+      selectedRobot: {
         head: {},
         left: {},
         torso: {},
         right: {},
         base: {},
-      }
+      },
+    }
+  },
+  methods: {
+    handlePartSelected(part, selectedPart) {
+      this.selectedRobot[part] = selectedPart
     },
     addToCart() {
       const robot = this.selectedRobot
+      // console.log(JSON.stringify(robot))
       const cost = robot.head.cost + robot.left.cost + robot.torso.cost + robot.right.cost + robot.base.cost
       this.cart.push({...robot, cost})
     },

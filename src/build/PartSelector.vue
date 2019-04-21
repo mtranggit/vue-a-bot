@@ -1,5 +1,5 @@
 <template>
-  <div class="part">
+  <div class="part" :class="position">
     <img :src="selectedPart.src" alt="Part" />
     <button @click="selectPreviousPart" class="prev-selector"></button>
     <button @click="selectNextPart" class="next-selector"></button>
@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import availableParts from '../data/parts'
-const parts = availableParts.heads
+// import availableParts from '../data/parts'
+// const parts = availableParts.heads
 
 function getPreviousValidIndex(index, length) {
   const idx = index - 1
@@ -21,20 +21,43 @@ function getNextValidIndex(index, length) {
   return idx > length - 1 ? 0 : idx
 }
 export default {
+  // props: ['parts', 'position'],
+  props: {
+    parts: {
+      type: Array,
+      required: true,
+    },
+    position: {
+      type: String,
+      required: true,
+      validator: function(value) {
+        return ['top', 'right', 'center', 'left', 'bottom'].includes(value)
+      },
+    },
+  },
+  created() {
+    this.emitSelectedPart()
+  },
+  updated() {
+    this.emitSelectedPart()
+  },
   data() {
     return {selectedPartIndex: 0}
   },
   computed: {
     selectedPart() {
-      return parts[this.selectedPartIndex]
+      return this.parts[this.selectedPartIndex]
     },
   },
   methods: {
+    emitSelectedPart() {
+      this.$emit('partSelected', this.selectedPart)
+    },
     selectNextPart() {
-      this.selectedPartIndex = getNextValidIndex(this.selectedPartIndex, parts.length)
+      this.selectedPartIndex = getNextValidIndex(this.selectedPartIndex, this.parts.length)
     },
     selectPreviousPart() {
-      this.selectedPartIndex = getPreviousValidIndex(this.selectedPartIndex, parts.length)
+      this.selectedPartIndex = getPreviousValidIndex(this.selectedPartIndex, this.parts.length)
     },
   },
 }
