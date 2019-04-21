@@ -13,6 +13,7 @@
     <main>
       <!-- <robot-builder /> -->
       <RobotBuilder />
+      <!-- <home-page /> -->
     </main>
   </div>
 </template>
@@ -25,6 +26,7 @@ export default {
   name: 'app',
   components: {
     RobotBuilder,
+    // HomePage,
   },
 }
 </script>
