@@ -1,7 +1,25 @@
 <template>
   <div class="robot-builder">
     <div class="content">
-      <button @click="addToCart()" class="add-to-cart">Add to cart</button>
+      <div class="preview">
+        <CollapsibleSection>
+          <div class="preview-content">
+            <div class="top-row">
+              <img :src="selectedRobot.head.src" />
+            </div>
+            <div class="middle-row">
+              <img :src="selectedRobot.left.src" class="rotate-left" />
+              <img :src="selectedRobot.torso.src" />
+              <img :src="selectedRobot.right.src" class="rotate-right" />
+            </div>
+            <div class="bottom-row">
+              <img :src="selectedRobot.base.src" />
+            </div>
+          </div>
+        </CollapsibleSection>
+        <button @click="addToCart()" class="add-to-cart">Add to cart</button>
+      </div>
+
       <div class="top-row">
         <!-- <div :class="[saleBorderClass, 'top', 'part']"> -->
         <!-- <div class="top part" :class="[saleBorderClass]"> -->
@@ -66,6 +84,7 @@
 import availableParts from '../data/parts'
 import robotBuilderMixin from './robotBuilderMixin'
 import PartSelector from './PartSelector'
+import CollapsibleSection from '../shared/CollapsibleSection'
 
 // eslint-disable-next-line no-unused-vars
 function titleCase(word) {
@@ -79,6 +98,7 @@ export default {
   // },
   components: {
     PartSelector,
+    CollapsibleSection,
   },
   mixins: [robotBuilderMixin],
   data() {
@@ -229,8 +249,7 @@ export default {
 }
 .add-to-cart {
   position: absolute;
-  right: 30px;
-  width: 220px;
+  width: 210px;
   padding: 3px;
   font-size: 16px;
 }
@@ -244,5 +263,26 @@ th {
 }
 .sale-border {
   border: 3px solid red;
+}
+.preview {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 210px;
+  height: 210px;
+  padding: 5px;
+}
+.preview-content {
+  border: 1px solid #999;
+}
+.preview img {
+  width: 50px;
+  height: 50px;
+}
+.rotate-right {
+  transform: rotate(90deg);
+}
+.rotate-left {
+  transform: rotate(-90deg);
 }
 </style>
