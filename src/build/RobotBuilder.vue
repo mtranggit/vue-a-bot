@@ -84,7 +84,7 @@ export default {
     CollapsibleSection,
   },
   created() {
-    this.$store.dispatch('getParts')
+    this.$store.dispatch('robots/getParts')
   },
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
@@ -118,7 +118,7 @@ export default {
       // console.log(JSON.stringify(robot))
       const cost = robot.head.cost + robot.left.cost + robot.torso.cost + robot.right.cost + robot.base.cost
       const robotWithCost = {...robot, cost}
-      this.$store.dispatch('addRobotToCart', robotWithCost).then(() => this.$router.push('/cart'))
+      this.$store.dispatch('robots/addRobotToCart', robotWithCost).then(() => this.$router.push('/cart'))
       // this.$store.commit('addRobotToCart', robotWithCost)
       // this.cart.push({...robot, cost})
       this.addedToCart = true

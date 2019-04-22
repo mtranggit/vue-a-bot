@@ -1,6 +1,9 @@
 import axios from 'axios'
 
 export default {
+  // state are always namespaced, setting namespaced to true will also
+  // ensure actions, mutations and getters are also namespaced
+  namespaced: true,
   state: {
     cart: [],
     parts: null,
