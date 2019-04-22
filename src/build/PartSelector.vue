@@ -1,5 +1,6 @@
 <template>
   <div class="part" :class="position">
+    {{ pinPadding }}
     <!-- <router-link
       :to="{
         name: 'Parts',
@@ -14,13 +15,23 @@
     <img :src="selectedPart.src" @click="showPartInfo()" alt="Part" />
     <button @click="selectPreviousPart" class="prev-selector"></button>
     <button @click="selectNextPart" class="next-selector"></button>
-    <span class="sale" v-show="selectedPart.onSale">Sale!</span>
+    <span
+      v-pin="{bottom: pinPadding, right: pinPadding}"
+      @click="pinPadding = '30px'"
+      class="sale"
+      v-show="selectedPart.onSale"
+      >Sale!</span
+    >
+    <!-- <span v-pin="{bottom: '10px', right: '5px'}" class="sale" v-show="selectedPart.onSale">Sale!</span> -->
+    <!-- <span v-pin:position.top.left class="sale" v-show="selectedPart.onSale">Sale!</span> -->
   </div>
 </template>
 
 <script>
 // import availableParts from '../data/parts'
 // const parts = availableParts.heads
+
+import pinDirective from '../shared/pinDirective.js'
 
 function getPreviousValidIndex(index, length) {
   const idx = index - 1
@@ -32,6 +43,9 @@ function getNextValidIndex(index, length) {
   return idx > length - 1 ? 0 : idx
 }
 export default {
+  directives: {
+    pin: pinDirective,
+  },
   // props: ['parts', 'position'],
   props: {
     parts: {
@@ -53,7 +67,7 @@ export default {
     this.emitSelectedPart()
   },
   data() {
-    return {selectedPartIndex: 0}
+    return {selectedPartIndex: 0, pinPadding: '10px'}
   },
   computed: {
     selectedPart() {
@@ -91,9 +105,9 @@ export default {
   border: 3px solid #aaa;
 }
 .sale {
-  position: absolute;
+  /* position: absolute;
   bottom: 5px;
-  right: 5px;
+  right: 5px; */
   color: white;
   background-color: red;
   padding: 3px;
