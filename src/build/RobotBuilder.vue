@@ -60,23 +60,6 @@
         />
       </div>
     </div>
-    <div class="cart">
-      <h2>Cart</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Robot</th>
-            <th class="cost">cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(robot, index) in cart" :key="index">
-            <td>{{ robot.head.title }}</td>
-            <td class="cost">{{ robot.cost }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </template>
 
@@ -131,7 +114,9 @@ export default {
       const robot = this.selectedRobot
       // console.log(JSON.stringify(robot))
       const cost = robot.head.cost + robot.left.cost + robot.torso.cost + robot.right.cost + robot.base.cost
-      this.cart.push({...robot, cost})
+      const robotWithCost = {...robot, cost}
+      this.$store.commit('addRobotToCart', robotWithCost)
+      // this.cart.push({...robot, cost})
       this.addedToCart = true
     },
   },

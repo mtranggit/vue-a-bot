@@ -19,6 +19,14 @@
               Browse
             </router-link>
           </li>
+          <li class="nav-item cart">
+            <router-link :to="{name: 'Cart'}" class="nav-link">
+              Cart
+            </router-link>
+            <div class="cart-items">
+              {{ cart.length }}
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
@@ -46,10 +54,15 @@ export default {
   //   RobotBuilder,
   //   // HomePage,
   // },
+  computed: {
+    cart() {
+      return this.$store.state.cart
+    },
+  },
 }
 </script>
 
-<style>
+<style lang="scss">
 body {
   background: linear-gradient(to bottom, #555, #999);
   background-attachment: fixed;
@@ -81,6 +94,11 @@ ul {
   font-size: 22px;
   cursor: pointer;
   border-right: 1px solid #bbb;
+  &.cart {
+    position: relative;
+    margin-left: auto;
+    border-right: none;
+  }
 }
 .logo {
   vertical-align: middle;
@@ -103,5 +121,16 @@ ul {
   background-color: #aaa;
   width: 100px;
   min-height: 300px;
+}
+.cart-items {
+  position: absolute;
+  top: -12px;
+  right: -15px;
+  font: 18px;
+  width: 25px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 100px;
+  background-color: #ffc600;
 }
 </style>
