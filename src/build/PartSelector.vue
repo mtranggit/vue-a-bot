@@ -31,7 +31,7 @@
 // import availableParts from '../data/parts'
 // const parts = availableParts.heads
 
-import pinDirective from '../shared/pinDirective.js'
+// import pinDirective from '../shared/pinDirective.js'
 
 function getPreviousValidIndex(index, length) {
   const idx = index - 1
@@ -43,9 +43,9 @@ function getNextValidIndex(index, length) {
   return idx > length - 1 ? 0 : idx
 }
 export default {
-  directives: {
-    pin: pinDirective,
-  },
+  // directives: {
+  //   pin: pinDirective,
+  // },
   // props: ['parts', 'position'],
   props: {
     parts: {
