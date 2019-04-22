@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import parts from '../data/parts.js'
+import getPartsMixin from './getPartsMixin.js'
+// import parts from '../data/parts.js'
 
 export default {
   props: {
@@ -21,11 +22,12 @@ export default {
       },
     },
   },
+  mixins: [getPartsMixin],
   computed: {
     part() {
       const {partType, id} = this
       // const {partType, id} = this.$route.params
-      return parts[partType].find(part => part.id === +id)
+      return this.parts[partType].find(part => part.id === +id)
     },
   },
 }

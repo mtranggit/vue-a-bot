@@ -2,7 +2,7 @@
   <div>
     <h2>Arms</h2>
     The arms are how your robot will interact with the world. They come in a variety of shapes and functions.
-    <div v-for="(arm, index) in arms" :key="index">
+    <div v-for="(arm, index) in parts.arms" :key="index">
       <h4>{{ arm.title }}</h4>
       <div>{{ arm.description }}</div>
     </div>
@@ -10,15 +10,17 @@
 </template>
 
 <script>
-import parts from '../data/parts.js'
+import getPartsMixin from './getPartsMixin.js'
+// import parts from '../data/parts.js'
 
 export default {
   name: 'RobotArms',
-  data() {
-    return {
-      arms: parts.arms,
-    }
-  },
+  mixins: [getPartsMixin],
+  // data() {
+  //   return {
+  //     arms: this.parts.arms,
+  //   }
+  // },
 }
 </script>
 

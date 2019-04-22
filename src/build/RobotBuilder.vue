@@ -1,5 +1,5 @@
 <template>
-  <div class="robot-builder">
+  <div v-if="availableParts" class="robot-builder">
     <div class="content">
       <div class="preview">
         <CollapsibleSection>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import availableParts from '../data/parts'
+// import availableParts from '../data/parts'
 import robotBuilderMixin from './robotBuilderMixin'
 import PartSelector from './PartSelector'
 import CollapsibleSection from '../shared/CollapsibleSection'
@@ -83,6 +83,9 @@ export default {
     PartSelector,
     CollapsibleSection,
   },
+  created() {
+    this.$store.dispatch('getParts')
+  },
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
       next(true)
@@ -96,7 +99,7 @@ export default {
     return {
       cart: [],
       addedToCart: false,
-      availableParts,
+      // availableParts,
       selectedRobot: {
         head: {},
         left: {},
@@ -115,12 +118,16 @@ export default {
       // console.log(JSON.stringify(robot))
       const cost = robot.head.cost + robot.left.cost + robot.torso.cost + robot.right.cost + robot.base.cost
       const robotWithCost = {...robot, cost}
-      this.$store.commit('addRobotToCart', robotWithCost)
+      this.$store.dispatch('addRobotToCart', robotWithCost).then(() => this.$router.push('/cart'))
+      // this.$store.commit('addRobotToCart', robotWithCost)
       // this.cart.push({...robot, cost})
       this.addedToCart = true
     },
   },
   computed: {
+    availableParts() {
+      return this.$store.state.robots.parts
+    },
     // headerBorderStyle() {
     //   return {
     //     border: this.selectedRobot.head.onSale ? '3px solid red' : '3px solid #aaa',
