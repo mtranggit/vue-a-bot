@@ -1,4 +1,5 @@
-import axios from 'axios'
+// import axios from 'axios'
+import ApiService from '../../services/ApiService'
 
 export default {
   state: {
@@ -15,11 +16,14 @@ export default {
     },
   },
   actions: {
-    signIn({commit}) {
-      axios
-        .post('/api/sign-in')
+    signIn({commit, state}) {
+      ApiService.signIn(state.user)
         .then(result => commit('updateCurrentUser', result.data))
         .catch(console.error)
+      // axios
+      //   .post('/api/sign-in')
+      //   .then(result => commit('updateCurrentUser', result.data))
+      //   .catch(console.error)
     },
     addRobotToCart() {
       console.log('user addRobotToCart called')

@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import pinDirective from './shared/pinDirective'
 import currencyFilter from './shared/currencyFilter'
+import 'nprogress/nprogress.css'
 
 Vue.config.productionTip = false
 Vue.directive('pin', pinDirective)

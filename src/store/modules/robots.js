@@ -1,4 +1,5 @@
-import axios from 'axios'
+// import axios from 'axios'
+import ApiService from '../../services/ApiService'
 
 export default {
   // state are always namespaced, setting namespaced to true will also
@@ -18,14 +19,18 @@ export default {
   },
   actions: {
     getParts({commit}) {
-      axios
-        .get('/api/parts')
+      ApiService.getParts()
         .then(result => commit('updateParts', result.data))
         .catch(console.error)
+      // axios
+      //   .get('/api/parts')
+      //   .then(result => commit('updateParts', result.data))
+      //   .catch(console.error)
     },
     addRobotToCart({commit, state}, robot) {
       const cart = [...state.cart, robot]
-      return axios.post('/api/cart', cart).then(() => commit('addRobotToCart', robot))
+      return ApiService.addRobotToCart(cart).then(() => commit('addRobotToCart', robot))
+      // return axios.post('/api/cart', cart).then(() => commit('addRobotToCart', robot))
     },
   },
   getters: {
